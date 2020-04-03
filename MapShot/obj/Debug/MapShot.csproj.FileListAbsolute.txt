@@ -1,0 +1,9 @@
+D:\project\Cs\MapShot\MapShot\bin\Debug\MapShot.exe.config
+D:\project\Cs\MapShot\MapShot\bin\Debug\MapShot.exe
+D:\project\Cs\MapShot\MapShot\bin\Debug\MapShot.pdb
+D:\project\Cs\MapShot\MapShot\obj\Debug\MapShot.csprojAssemblyReference.cache
+D:\project\Cs\MapShot\MapShot\obj\Debug\MapShot.Form1.resources
+D:\project\Cs\MapShot\MapShot\obj\Debug\MapShot.Properties.Resources.resources
+D:\project\Cs\MapShot\MapShot\obj\Debug\MapShot.csproj.GenerateResource.cache
+D:\project\Cs\MapShot\MapShot\obj\Debug\MapShot.exe
+D:\project\Cs\MapShot\MapShot\obj\Debug\MapShot.pdb
