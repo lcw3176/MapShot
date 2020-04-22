@@ -35,7 +35,7 @@ namespace MapShot
 
             WebRequest request = WebRequest.Create(query);
 
-            string rkey = "개발자 키";
+            string rkey = " 개발자 키";
             string header = "KakaoAK" + rkey;
             request.Headers.Add("Authorization", header);
             request.UseDefaultCredentials = true;

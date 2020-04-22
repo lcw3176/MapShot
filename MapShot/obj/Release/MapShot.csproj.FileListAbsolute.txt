@@ -6,3 +6,4 @@ D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.Properties.Resources.resources
 D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.csproj.GenerateResource.cache
 D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.exe
 D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.pdb
+D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.csproj.CoreCompileInputs.cache

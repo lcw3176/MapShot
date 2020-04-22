@@ -114,7 +114,7 @@ namespace MapShot
             string center = lng + "," + lat;
             string crs = "epsg:4326";
             string size = "1024,1024";
-            string form = "png";
+            string form = "jpeg";
 
             string query = string.Format("&key={0}&basemap={1}&center={2}&crs={3}&zoom={4}&size={5}&format={6}", key, baseMap, center, crs, zoom, size, form);
 
@@ -150,10 +150,10 @@ namespace MapShot
                     Bitmap bitmap = new Bitmap(ms);
 
                     int height = bitmap.Height - 82;
-                    string savePath = string.Format(@"{0}\{1}.png", path, addressFileName);
+                    string savePath = string.Format(@"{0}\{1}.jpg", path, addressFileName);
 
                     Bitmap clone = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, height), PixelFormat.DontCare);
-                    clone.Save(savePath);
+                    clone.Save(savePath, ImageFormat.Jpeg);
                     fileName.Add(savePath);
 
                     data.Dispose();
@@ -187,7 +187,7 @@ namespace MapShot
                     img.Dispose();
                 }
 
-                bitmap.Save(path + "\\" + addressFileName + " 병합사진.png");
+                bitmap.Save(path + "\\" + addressFileName + " 병합사진.jpg", ImageFormat.Jpeg);
 
                 fileName.Clear();
             }
