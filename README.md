@@ -12,17 +12,18 @@
 
 
 # 사용법
-![첫번째](https://user-images.githubusercontent.com/59993347/80019817-11ef7500-8513-11ea-9037-7e5c5a4fcde0.png)
 ### 중심점 주소 지정
+![첫번째](https://user-images.githubusercontent.com/59993347/80019817-11ef7500-8513-11ea-9037-7e5c5a4fcde0.png)
 
-![두번째](https://user-images.githubusercontent.com/59993347/80020036-5bd85b00-8513-11ea-8348-12daed43d6f2.png)
 ### 캡쳐 진행중
+![두번째](https://user-images.githubusercontent.com/59993347/80020036-5bd85b00-8513-11ea-8348-12daed43d6f2.png)
 
-![세번째](https://user-images.githubusercontent.com/59993347/80020162-8b876300-8513-11ea-9a48-48d399150ce6.png)
 ### 작업 완료
+![세번째](https://user-images.githubusercontent.com/59993347/80020162-8b876300-8513-11ea-9a48-48d399150ce6.png)
 
-![네번째](https://user-images.githubusercontent.com/59993347/80020357-dbfec080-8513-11ea-8ca6-0e19a6c5e9b0.png)
 ### 작업 결과
+![네번째](https://user-images.githubusercontent.com/59993347/80020357-dbfec080-8513-11ea-8ca6-0e19a6c5e9b0.png)
 
-![오번째](https://user-images.githubusercontent.com/59993347/80020388-e8831900-8513-11ea-83cf-4e24223aefd1.png)
 ### 작업 결과 확대, 깨짐 없음
+![오번째](https://user-images.githubusercontent.com/59993347/80020388-e8831900-8513-11ea-83cf-4e24223aefd1.png)
+
