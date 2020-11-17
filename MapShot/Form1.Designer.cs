@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.captureButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -165,6 +166,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.captureButton);
             this.Controls.Add(this.webBrowser1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "NoGaDa_Helper";
             this.ResumeLayout(false);

@@ -7,15 +7,13 @@ namespace MapShot
     public partial class Form1 : Form
     {
 
-        CaptureManager capture;
-        string path = null;
+        private CaptureManager capture = new CaptureManager();
 
         public Form1()
         {
             InitializeComponent();
             webBrowser1.Navigate("https://map.kakao.com/");
-            capture = CaptureManager.getInstance();
-            capture.add += new AddProgress(AddCount);
+            capture.add += AddCount;
             LevelCombobox.SelectedIndex = 0;
         }
 
@@ -39,12 +37,12 @@ namespace MapShot
             {
                 if (folder.ShowDialog() == DialogResult.OK)
                 {
-                    path = folder.SelectedPath;
+                    string path = folder.SelectedPath;
 
                     progressBar1.Value = 0;
                     progressBar1.Maximum = blockNum + 1;
 
-                    Thread thread = new Thread(() => capture.makeImage(qstr, blockNum, path, zoomLevel.ToString()));
+                    Thread thread = new Thread(() => capture.StartCapture(qstr, blockNum, path, zoomLevel.ToString()));
                     thread.Start();
                 }
             }

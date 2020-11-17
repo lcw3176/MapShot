@@ -4,38 +4,24 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MapShot
 {
-    public delegate void AddProgress(int value);
+    
 
     public class CaptureManager
     {
+        public delegate void AddProgress(int value);
         public event AddProgress add;
-        private static CaptureManager capture;
-        List<string> fileName = new List<string>();
+        private List<string> fileName = new List<string>();
+        private const int width = 1024;
+        private const int height = 942;
+
+        private KaKaoAPI kakao = new KaKaoAPI();
 
 
-        KaKaoAPI kakao;
-
-        protected CaptureManager()
-        {
-            kakao = KaKaoAPI.getInstance();
-        }
-
-        public static CaptureManager getInstance()
-        {
-            if(capture == null)
-            {
-                capture = new CaptureManager();
-            }
-
-            return capture;
-        }
-
-        public void makeImage(string qstr, int blockNum, string topPath, string zoom)
+        public void StartCapture(string qstr, int blockNum, string topPath, string zoom)
         {
             List<string> locale = kakao.Search(qstr);
 
@@ -62,18 +48,15 @@ namespace MapShot
                 double lngFlag = 0.011;
                 double latFlag = 0.008;
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append(topPath);
-                sb.Append(@"\");
-                sb.Append(place);
-
-                if (zoom == "18") { lngFlag /= 2; latFlag /= 2; sb.Append("[초고화질]"); }
-
+                string path = Path.Combine(topPath, place);
                 string addressFileName;
-                string path = sb.ToString();
 
-                lng -= (lngFlag * moveTopCoor);
-                lat += (latFlag * moveTopCoor);
+
+                if (zoom == "18") { lngFlag /= 2; latFlag /= 2; path += "[초고화질]"; }
+
+
+                lng -= lngFlag * moveTopCoor;
+                lat += latFlag * moveTopCoor;
 
                 DirectoryInfo di = new DirectoryInfo(path);
 
@@ -83,8 +66,8 @@ namespace MapShot
                 {
                     for (int j = 0; j < rotation; j++)
                     {
-                        addressFileName = place + "[" + count.ToString() + "]";
-                        capture.getImage(lng.ToString(), lat.ToString(), path, addressFileName, zoom);
+                        addressFileName = string.Format("{0}[{1}]", place, count.ToString());
+                        GetImageFromUrl(lng.ToString(), lat.ToString(), path, addressFileName, zoom);
                         lng += lngFlag;
                         add(++count);
                     }
@@ -93,7 +76,7 @@ namespace MapShot
                     lat -= latFlag;
                 }
 
-                makeOneshot(blockNum, path, place);
+                MakeOneShot(blockNum, path, place);
                 add(++count);
 
                 MessageBox.Show("작업이 완료되었습니다.", "알림");
@@ -106,7 +89,7 @@ namespace MapShot
             }
         }
 
-        private void getImage(string lng, string lat, string path, string addressFileName, string zoom)
+        private void GetImageFromUrl(string lng, string lat, string path, string addressFileName, string zoom)
         {
             string url = "http://api.vworld.kr/req/image?service=image&request=getmap"; // &key=인증키&[요청파라미터]
             string key = "개발자 키";
@@ -118,63 +101,41 @@ namespace MapShot
 
             string query = string.Format("&key={0}&basemap={1}&center={2}&crs={3}&zoom={4}&size={5}&format={6}", key, baseMap, center, crs, zoom, size, form);
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append(url);
-            sb.Append(query);
-
+            string requestUrl = string.Format("{0}{1}", url, query);
 
             try
             {
-                WebRequest request = WebRequest.Create(sb.ToString());
+                WebRequest request = WebRequest.Create(requestUrl);
                 WebResponse response = request.GetResponse();
                 Stream data = response.GetResponseStream();
+               
+                // 원본 사이즈 1024 1024
+                // 로고 커팅, 다른 사진과 병합 시
+                // 82만큼 커트가 가장 깔끔
+                
+                Bitmap bitmap = new Bitmap(data);
 
-                byte[] read = new byte[512];
+                string savePath = string.Format(@"{0}\{1}.jpg", path, addressFileName);
+                
+                Bitmap clone = bitmap.Clone(new Rectangle(0, 0, width, height), PixelFormat.DontCare);
+                clone.Save(savePath, ImageFormat.Jpeg);
+                fileName.Add(savePath);
+                
+                data.Dispose();
+                clone.Dispose();
+                bitmap.Dispose();
 
-                int bytes = data.Read(read, 0, 512);
-
-                Encoding encode = Encoding.Default;
-
-                using (MemoryStream ms = new MemoryStream(300))
-                {
-                    while (bytes > 0)
-                    {
-                        ms.Write(read, 0, bytes);
-                        bytes = data.Read(read, 0, 512);
-                    }
-
-                    // 원본 사이즈 1024 1024
-                    // 로고 커팅, 다른 사진과 병합 시
-                    // 82만큼 커트가 가장 깔끔
-
-                    Bitmap bitmap = new Bitmap(ms);
-
-                    int height = bitmap.Height - 82;
-                    string savePath = string.Format(@"{0}\{1}.jpg", path, addressFileName);
-
-                    Bitmap clone = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, height), PixelFormat.DontCare);
-                    clone.Save(savePath, ImageFormat.Jpeg);
-                    fileName.Add(savePath);
-
-                    data.Dispose();
-                    clone.Dispose();
-                    bitmap.Dispose();
-
-                }
             }
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.ToString());
             }
         }
 
 
-        private void makeOneshot(int blockNum, string path, string addressFileName)
+        private void MakeOneShot(int blockNum, string path, string addressFileName)
         {
-            int width = 1024;
-            int height = 942;
-
             int root = (int)Math.Sqrt(blockNum);
 
             using (Bitmap bitmap = new Bitmap(width * root, height * root))
@@ -182,12 +143,12 @@ namespace MapShot
             {
                 for (int i = 0; i < blockNum; i++)
                 {
-                    Image img = Bitmap.FromFile(fileName[i]);
+                    Image img = Image.FromFile(fileName[i]);
                     g.DrawImage(img, (i % root) * width, (i / root) * height);
                     img.Dispose();
                 }
 
-                bitmap.Save(path + "\\" + addressFileName + " 병합사진.jpg", ImageFormat.Jpeg);
+                bitmap.Save(Path.Combine(path, addressFileName + " 병합사진.jpg"), ImageFormat.Jpeg);
 
                 fileName.Clear();
             }

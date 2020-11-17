@@ -9,34 +9,17 @@ namespace MapShot
     public class KaKaoAPI
     {
 
-        private static KaKaoAPI kakao;
-
-        protected KaKaoAPI()
-        {
-
-        }
-
-        public static KaKaoAPI getInstance()
-        {
-            if(kakao == null)
-            {
-                kakao = new KaKaoAPI();
-            }
-
-            return kakao;
-        }
-
         public List<string> Search(string qstr)
         {
-            string site = "https://dapi.kakao.com/v2/local/search/address.json";
-            string query = string.Format("{0}?query={1}", site, qstr);
+            string url = "https://dapi.kakao.com/v2/local/search/address.json";
+            string query = string.Format("{0}?query={1}", url, qstr);
 
             List<string> locale = new List<string>();
 
             WebRequest request = WebRequest.Create(query);
 
-            string rkey = " 개발자 키";
-            string header = "KakaoAK" + rkey;
+            string rkey = "개발자 키";
+            string header = "KakaoAK " + rkey;
             request.Headers.Add("Authorization", header);
             request.UseDefaultCredentials = true;
             request.PreAuthenticate = true;

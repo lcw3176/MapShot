@@ -1,9 +1,0 @@
-C:\Users\THE-LEE\Desktop\MapShot.exe.config
-C:\Users\THE-LEE\Desktop\MapShot.exe
-C:\Users\THE-LEE\Desktop\MapShot.pdb
-D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.Form1.resources
-D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.Properties.Resources.resources
-D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.csproj.GenerateResource.cache
-D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.exe
-D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.pdb
-D:\project\Cs\MapShot\MapShot\obj\Release\MapShot.csproj.CoreCompileInputs.cache
